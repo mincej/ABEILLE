@@ -85,7 +85,6 @@ IdentifyAGE <- function(divergence_score, delta_count, SequencingTable, Reconstr
   DataReturn <- DataReturn[-1,]
   row.names(DataReturn) <- NULL
   DataReturn <- ComputeAnomalyScore(DataReturn)
-  DataReturn <- DataReturn[DataReturn$predict == TRUE,]
 
   return(DataReturn)
 }
