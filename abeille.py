@@ -6,14 +6,17 @@ import argparse
 import numpy as np
 import pandas as pd
 import tensorflow as tf
+
+from tf.keras.callbacks import EarlyStopping
+
 tfk = tf.keras
 tfkl = tfk.layers
 
-def abeille_VAE(file,logarithm = True, read_count = True,
-                batch_size = 30, epochs = 1500, kernel = "lecun_normal",
-                kl_loss_weight = 0.5, edl1 = 2048, edl2 = 1024, edl3 = 512,
-                edl4 = 256, latent_size = 128, ddl1 = 256, ddl2 = 512,
-                ddl3 = 1024, ddl4 = 2048):
+def abeille_VAE(file,logarithm = True, read_count = True, latent_size = 128,
+                batch_size = 30, epochs = 1500, early_stop_epochs = None,
+                kernel = "lecun_normal", kl_loss_weight = 0.5,
+                edl1 = 2048, edl2 = 1024, edl3 = 512, edl4 = 256,
+                ddl1 = 256, ddl2 = 512, ddl3 = 1024, ddl4 = 2048):
     tf.random.set_seed(3528374635.369094)
     def sampling(args):
         z_mean, z_log_var = args
@@ -101,7 +104,11 @@ def abeille_VAE(file,logarithm = True, read_count = True,
     vae.summary()
     
     #####Train
-    vae.fit(data_input, epochs=epochs, batch_size=batch_size)
+    callbacks = []
+    if early_stopping_epochs is not None:
+      callbacks.append(EarlyStopping(monitor="loss", patient=early_stopping_epochs))
+    
+    vae.fit(data_input, epochs=epochs, batch_size=batch_size, callbacks=[callbacks])
     end_time = time.time() - start_time
     print("-----",end_time//3600,"hours",(end_time%3600)//60,"minutes",round((end_time%3600)%60,2),"secondes","-----")
     
