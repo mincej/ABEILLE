@@ -13,7 +13,7 @@ tfk = tf.keras
 tfkl = tfk.layers
 
 def abeille_VAE(file,logarithm = True, read_count = True, latent_size = 128,
-                batch_size = 30, epochs = 1500, early_stop_epochs = None,
+                batch_size = 30, epochs = 1500, early_stop_epochs = None, verbose = 1,
                 kernel = "lecun_normal", kl_loss_weight = 0.5,
                 edl1 = 2048, edl2 = 1024, edl3 = 512, edl4 = 256,
                 ddl1 = 256, ddl2 = 512, ddl3 = 1024, ddl4 = 2048):
@@ -108,11 +108,11 @@ def abeille_VAE(file,logarithm = True, read_count = True, latent_size = 128,
     if early_stopping_epochs is not None:
       callbacks.append(EarlyStopping(monitor="loss", patient=early_stopping_epochs))
     
-    vae.fit(data_input, epochs=epochs, batch_size=batch_size, callbacks=[callbacks])
+    vae.fit(data_input, epochs=epochs, batch_size=batch_size, callbacks=[callbacks], verbose = verbose)
     end_time = time.time() - start_time
     print("-----",end_time//3600,"hours",(end_time%3600)//60,"minutes",round((end_time%3600)%60,2),"secondes","-----")
     
-    pred = vae.predict(data_input)
+    pred = vae.predict(data_input, verbose = verbose)
     # To save the latent space
     #pred, latent_space = vae.predict(data_input)
     #latent_space=pd.DataFrame(latent_space)
