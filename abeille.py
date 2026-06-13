@@ -13,7 +13,7 @@ tfk = tf.keras
 tfkl = tfk.layers
 
 def abeille_VAE(file,logarithm = True, read_count = True, latent_size = 128,
-                batch_size = 30, epochs = 1500, early_stop_epochs = None, verbose = 1,
+                batch_size = 30, epochs = 1500, early_stopping_epochs = None, verbose = 1,
                 kernel = "lecun_normal", kl_loss_weight = 0.5,
                 edl1 = 2048, edl2 = 1024, edl3 = 512, edl4 = 256,
                 ddl1 = 256, ddl2 = 512, ddl3 = 1024, ddl4 = 2048):
