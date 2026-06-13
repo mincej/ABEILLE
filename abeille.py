@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 
-from tf.keras.callbacks import EarlyStopping
+from tensorflow.keras.callbacks import EarlyStopping
 
 tfk = tf.keras
 tfkl = tfk.layers
