@@ -106,7 +106,7 @@ def abeille_VAE(file,logarithm = True, read_count = True, latent_size = 128,
     #####Train
     callbacks = []
     if early_stopping_epochs is not None:
-      callbacks.append(EarlyStopping(monitor="loss", patient=early_stopping_epochs))
+      callbacks.append(EarlyStopping(monitor="loss", patience=early_stopping_epochs))
     
     vae.fit(data_input, epochs=epochs, batch_size=batch_size, callbacks=[callbacks], verbose = verbose)
     end_time = time.time() - start_time
